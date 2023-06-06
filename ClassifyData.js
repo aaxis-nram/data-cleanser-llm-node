@@ -25,10 +25,14 @@ let categories = [
     ["All Other Programs", "Anything that doesn't fit in the programs above."]
 ];
 
-let mainPrompt = `The above information pertains to categories of undergraduate programs. Categorize the below data into one of the program categories above.  
-Desired Format: CSV of response number, program number
-`;
+let mainPrompt = `The above information pertains to categories of undergraduate programs. 
+Categorize the below data into one of the program categories above.  
 
+Desired Format: JSON format of an array with response number, program number
+
+Example Example output:  [[1,7],[2,1],[3,5],[4,8],[5,7]]
+
+`;
 // This is how many data points will be processed in one request. We know anything over 80 is a problem.
 let batchSize = 50;
 
@@ -95,23 +99,25 @@ async function getClassificationMapping(data) {
         requestCount++;
         if (requestCount>batchSize || index==totalDataPoints-1) {
             dataText += "###\n";
-            let prompt = categoriesText + "\n" + mainPrompt + "\n" + dataText;
 
-            console.log("-- The prompt is:\n");
-            console.log(prompt);
-
-            try {
-                const response = await openai.createChatCompletion({
+            let prompt = categoriesText + mainPrompt + dataText;
+            let payload = {
                 model: "gpt-3.5-turbo",
                 temperature: 0,
-                messages: [
+                messages: [ 
                     {"role": "system", "content": "You are a helpful assistant."},
-                    {"role": "user", "content": prompt},
+                    {"role": "user","content": prompt }
                 ]
-                });
+            };
+
+            console.log("-- The payload is:\n");
+            console.log(payload);
+
+            try {
+                const response = await openai.createChatCompletion(payload);
                 console.log("-- Response Data is:\n");
                 console.log(JSON.stringify(response.data));
-                let mapping = convertCSVStringToArray(response.data.choices[0].message.content);
+                let mapping = JSON.parse(response.data.choices[0].message.content);
 
                 
                 // Now construct the response array
@@ -119,7 +125,7 @@ async function getClassificationMapping(data) {
                 for (index2=0; index2<mapping.length; ++index2) {
                     if (Array.isArray(mapping[index2]) && mapping[index2].length==2 && Array.isArray(categories[mapping[index2][1]-1])) {
                         //console.log((mapping[index2][0])+" topic is "+uniqueData[mapping[index2][0]-1]);
-                        //console.log((mapping[index2][1])+" cat is   "+categories[mapping[index2][1]-1][0]+"\n");
+                        //console.log("   "+(mapping[index2][1])+" cat is   "+categories[mapping[index2][1]-1][0]+"\n");
                         
                         mappedData[uniqueData[mapping[index2][0]-1]] = categories[mapping[index2][1]-1][0];
                     }
@@ -145,7 +151,7 @@ async function getClassificationMapping(data) {
     return mappedData;
 }
 
-
+/*
 function convertCSVStringToArray(csvString) {
   // Split the string by newline characters
   const lines = csvString.split('\n');
@@ -171,6 +177,7 @@ function convertCSVStringToArray(csvString) {
   // Return the array
   return array;
 }
+*/
 
 function onlyUnique(value, index, array) {
     return value &&  array.indexOf(value) === index;

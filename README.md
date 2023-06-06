@@ -36,7 +36,9 @@ The main prompt we are using is
 
 The above information pertains to categories of undergraduate programs. Categorize the below data into one of the program categories above.
 
-Desired Format: CSV of response number, program number
+Desired Format: JSON format of an array with response number, program number
+
+Example Example output:  [[1,7],[2,1],[3,5],[4,8],[5,7]]
 
 Data:
 ###
@@ -50,9 +52,11 @@ Data:
 
 The Response from the LLM is:
 ```
-1, 7
-2, 1
-3, 5
-4, 8
-5, 7
+[ 
+  [1, 7],
+  [2, 1],
+  [3, 5],
+  [4, 8],
+  [5, 7]
+]
 ```
