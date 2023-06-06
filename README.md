@@ -19,8 +19,9 @@ A new destFile is created. It will have an additional column called destCol in i
 
 
 ## Prompt
-The main prompt we are using for example is:
+The main prompt we are using is
 
+```
 1. Arts and Humanities: Includes majors such as literature, philosophy, history, and visual and performing arts.
 2. Social Sciences: Includes majors like psychology, sociology, anthropology, political science, and international relations.
 3. Business and Management: Covers majors such as marketing, finance, economics, business administration, and accounting.
@@ -33,9 +34,11 @@ The main prompt we are using for example is:
 10. Communication and Media Studies: Covers majors such as journalism, mass communication, media production, advertising, and public relations.
 11. All Other Programs: Anything that doesn't fit in the programs above.
 
-The above information pertains to categories of undergraduate programs. Categorize the below survey responses into one of the program categories above.  
+The above information pertains to categories of undergraduate programs. Categorize the below data into one of the program categories above.
+
 Desired Format: CSV of response number, program number
-Survey Responses: 
+
+Data:
 ###
 1. Chem E
 2. Literature
@@ -43,12 +46,13 @@ Survey Responses:
 4. Health sciences
 5. Mechanical Engineering
 ###
-
-RESPONSE:
 ```
- 1, 7
- 2, 1
- 3, 5
- 4, 8
- 5, 7
+
+The Response from the LLM is:
+```
+1, 7
+2, 1
+3, 5
+4, 8
+5, 7
 ```
