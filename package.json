@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "csv-parser": "^3.0.0",
+    "csv-stringify": "^6.4.0",
+    "openai": "^3.2.1"
+  },
+  "name": "data-cleanser-with-llms",
+  "description": "Uses LLMs (ChatGPT Chat Completion API) to cleanse data",
+  "version": "1.0.0",
+  "main": "test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
